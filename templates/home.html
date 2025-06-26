@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ <!-- Hero Section -->
+  <section class="hero">
+    <h1>Big Deals, Bigger Savings!</h1>
+    <p>Up to 70% off on top categories</p>
+  <a href="{% url 'deals' %}" class="shop-button">Shop Now</a>
+   </section>
+
+  <!-- Categories -->
+<section class="categories">
+  <h2>Shop by Category</h2>
+  <div class="category-grid">
+    {% for i in categories %}
+      <a href="{% url 'deals' %}?category={{ i.id }}" class="home-productcard">
+        <div class="category-card">
+          <img src="{{ i.image.url }}" alt="{{ i.name }}">
+          <h1>{{ i.name }}</h1>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock content %}

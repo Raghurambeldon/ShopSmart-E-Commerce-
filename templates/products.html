@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="product-wrapper">
+    <div class="product-container">
+
+      <!-- Product Image -->
+      <div class="product-image-box">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info-box">
+        <h1 class="product-title">{{ product.name }}</h1>
+        <p class="product-category">{{ product.category }}</p>
+        <p class="product-price">₹{{ product.price }}/-</p>
+
+        <!-- Full Description (from TextField) -->
+        <div class="product-full-desc">
+          <h3>Product Details</h3>
+          <p>{{ product.desc }}</p>
+        </div>
+
+        <!-- Buttons -->
+<div class="product-buttons">
+    <form action="{% url 'add_to_cart' product_id=product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Link -->
+    <a href="{% url 'deals' %}" class="back-link">← Back to Deals</a>
+  </div>
+
+{% endblock content %}

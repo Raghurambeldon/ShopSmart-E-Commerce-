@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+
+
+  <div class="checkout-container">
+
+<div class="checkout-form">
+  <h2>Checkout</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-primary">Place Order</button>
+  </form>
+</div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      <h3>Your Cart</h3>
+
+      {% for item in cart_items %}
+        <div class="cart-card">
+          <div class="cart-product-info">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-product-image">
+            <span class="cart-product-name">{{ item.product.name }}</span>
+          </div>
+          <span>₹{{ item.product.price|floatformat:2 }}</span>
+          <span>x{{ item.quantity }}</span>
+          <span>
+            {% with item.product.price|multiply:item.quantity as total %}
+              ₹{{ total|floatformat:2 }}
+            {% endwith %}
+          </span>
+        </div>
+      {% empty %}
+        <p>Your cart is empty.</p>
+      {% endfor %}
+
+      <div class="total-price">
+        <p>Total: ₹{{ total_price|floatformat:2 }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post">
+    {% if messages %}
+    {% for message in  messages %}
+   <p>  {{message}}</p>
+    
+    {% endfor %}
+    
+    {% endif %}
+<br>
+
+
+    {% csrf_token %}
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" maxlength="20" ><br>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" maxlength="20" ><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" maxlength="254" ><br>
+
+    <label for="mobile">Mobile:</label>
+    <input type="number" id="mobile" name="mobile" maxlength="10" ><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" maxlength="100" ><br>
+
+    <button type="submit">Submit</button>
+    <br><br>
+    <div class="auth-footer">
+        Already Have An Account? <a href="{% url "login" %}">Login here</a>
+      </div>
+</form>
+
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="order-summary">
+    <h2 class="order-title">Order Summary</h2>
+    <h3 class="order-id">Order #{{ order.id }}</h3>
+    <p><strong>Status:</strong> {{ order.status }}</p>
+    <p><strong>Payment Method:</strong> {{ order.get_payment_method_display }}</p>
+    <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+    <p><strong>Date Placed:</strong> {{ order.date_created }}</p>
+
+    <h4 class="items-title">Items in Your Order:</h4>
+    <table class="order-items" border="1">
+      <thead>
+        <tr>
+          <th class="table-header">Product</th>
+          <th class="table-header">Price</th>
+          <th class="table-header">Quantity</th>
+          <th class="table-header">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order_items %}
+          <tr class="table-row">
+            <td class="table-cell">{{ item.product.name }}</td>
+            <td class="table-cell">₹{{ item.price }}</td>
+            <td class="table-cell">{{ item.quantity }}</td>
+            <td class="table-cell">₹{{ item.total_price }}</td>  <!-- This will automatically calculate -->
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p><a class="back-link" href="{% url 'deals' %}">Back to Deals</a></p>
+  </div>
+{% endblock %}

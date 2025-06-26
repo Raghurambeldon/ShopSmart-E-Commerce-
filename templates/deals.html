@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+  <div class="product-page-container">
+
+    <!-- Sidebar Filters -->
+    <aside class="filter-sidebar">
+      <h3>Filter by Category</h3>
+      <div class="category-buttons">
+        {# "All Products" link: clear category but keep search query if any #}
+        <a href="{% url 'deals' %}{% if search_query %}?search={{ search_query }}{% endif %}" 
+           class="category-button {% if not selected_category %}active{% endif %}">
+          All Products
+        </a>
+
+        {% for j in categories %}
+          {# Build URL with category and preserve search query if exists #}
+          <a href="{% url 'deals' %}?category={{ j.id }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+             class="category-button {% if selected_category == j.id|stringformat:'s' %}active{% endif %}">
+            {{ j.name }}
+          </a>
+        {% endfor %}
+      </div>
+    </aside>
+
+    <!-- Featured Products -->
+    <section class="products">
+        {% if messages %}
+    {% for message in  messages %}
+   <h1>  {{message}}</h1>
+    
+    {% endfor %}
+    
+    {% endif %}
+          <br> <br> 
+      <h2>Featured Products</h2>
+      <div class="product-grid">
+        {% if products %}
+          {% for i in products %}
+            <a href="{% url 'product_detail' i.id %}" class="product-card-link">
+              <div class="product-card">
+                <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                <h2>{{ i.name }}</h2>
+                <h3>{{ i.category }}</h3>
+                <p>Rs.{{ i.price }}/-</p>
+              </div>
+            </a>
+          {% endfor %}
+        {% else %}
+          <p>No products found.</p>
+        {% endif %}
+      </div>
+    </section>
+
+  </div>
+</div>
+
+{% endblock content %}
